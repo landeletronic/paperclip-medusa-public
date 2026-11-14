@@ -14,7 +14,7 @@ import json, statistics, subprocess, time, urllib.request
 LITELLM = "http://127.0.0.1:4000"
 PAPERCLIP = "http://127.0.0.1:3100"
 MODEL = "medusa-primary"
-HELPER_KEY = open("/home/tlandskron/ci/medusa-local-helper.key").read().strip()
+HELPER_KEY = open("/home/usuario/ci/medusa-local-helper.key").read().strip()
 
 
 def master_key():

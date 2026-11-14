@@ -10,7 +10,7 @@
 import json, os, re, sys, threading, time, unicodedata, urllib.error, urllib.request
 
 LITELLM = "http://127.0.0.1:4000"
-HELPER_KEY = open("/home/tlandskron/ci/medusa-local-helper.key").read().strip()
+HELPER_KEY = open("/home/usuario/ci/medusa-local-helper.key").read().strip()
 MODEL = "medusa-local-helper"
 N_SAMPLES = 3
 HERMES_LOAD = "--hermes-load" in sys.argv

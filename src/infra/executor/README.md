@@ -13,7 +13,7 @@ e na decisão F1.0: cria **um container efêmero por run**, monta o workspace pe
 ## Uso
 
 ```bash
-# Instalação canônica no host (executado como usuário comum do grupo docker — ex.: tlandskron):
+# Instalação canônica no host (executado como usuário comum do grupo docker — ex.: usuario):
 #   sudo install -m 755 -o root -g root src/infra/executor/executor.py /usr/local/bin/paperclip-run-executor
 /usr/local/bin/paperclip-run-executor health          # Docker disponível?
 /usr/local/bin/paperclip-run-executor run --spec spec.json        # executa um run

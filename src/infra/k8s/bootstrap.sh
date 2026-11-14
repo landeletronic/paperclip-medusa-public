@@ -5,7 +5,7 @@
 #
 # Idempotente: cria o cluster se ausente; instala/atualiza os charts; aplica os
 # manifests. O token do Vault é GERADO e gravado apenas em
-# /home/tlandskron/ci/vault-root-token (600) — nunca versionado.
+# /home/usuario/ci/vault-root-token (600) — nunca versionado.
 #
 # Uso: bash bootstrap.sh
 # Remoção completa: k3d cluster delete medusa (ver runbook §12)
@@ -17,7 +17,7 @@ NS_VAULT=vault
 NS_ESO=external-secrets
 NS_KEDA=keda
 NS_JOBS=medusa-jobs
-TOKEN_FILE=/home/tlandskron/ci/vault-root-token
+TOKEN_FILE=/home/usuario/ci/vault-root-token
 K8S_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # 1) cluster (idempotente) — API só em loopback; sem traefik/servicelb

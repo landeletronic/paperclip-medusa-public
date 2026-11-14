@@ -27,7 +27,7 @@ from pathlib import Path
 
 EXECUTOR = os.environ.get("PAPERCLIP_EXECUTOR_BIN", "/usr/local/bin/paperclip-run-executor")
 TOKEN_FILE = Path(os.environ.get("PAPERCLIP_EXECUTOR_SERVICE_TOKEN",
-                                 "/home/tlandskron/ci/executor-service.token"))
+                                 "/home/usuario/ci/executor-service.token"))
 BIND = os.environ.get("PAPERCLIP_EXECUTOR_SERVICE_BIND", "127.0.0.1")
 PORT = int(os.environ.get("PAPERCLIP_EXECUTOR_SERVICE_PORT", "8700"))
 MAX_BODY = 256 * 1024

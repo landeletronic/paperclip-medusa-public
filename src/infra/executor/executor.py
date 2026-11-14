@@ -59,9 +59,9 @@ TRANSCRIPT_MAX_BYTES = 200 * 1024
 # (padrão do lab: ci/textfile/*.prom). Concorrência: slots por flock (liberados
 # pelo kernel se o processo morrer — crash-safe).
 STATE_PATH = Path(os.environ.get("PAPERCLIP_EXECUTOR_STATE",
-                                 "/home/tlandskron/ci/paperclip-executor-state.json"))
+                                 "/home/usuario/ci/paperclip-executor-state.json"))
 TEXTFILE_DIR = Path(os.environ.get("PAPERCLIP_TEXTFILE_DIR",
-                                   "/home/tlandskron/hermes-architect/ci/textfile"))
+                                   "/home/usuario/hermes-architect/ci/textfile"))
 MAX_CONCURRENT = max(1, int(os.environ.get("PAPERCLIP_EXECUTOR_MAX_CONCURRENT", "2")))
 SLOTS_DIR = STATE_PATH.parent / "paperclip-executor-slots"
 

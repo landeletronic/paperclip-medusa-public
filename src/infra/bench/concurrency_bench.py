@@ -20,7 +20,7 @@ NUM_PREDICT = 64
 INTERVALO_HERMES = 3.0
 SAMPLE_S = 30
 CARDS = {"rx6600": "/sys/class/drm/card1/device", "rx5500": "/sys/class/drm/card2/device"}
-HELPER_KEY_FILE = "/home/tlandskron/ci/medusa-local-helper.key"
+HELPER_KEY_FILE = "/home/usuario/ci/medusa-local-helper.key"
 HELPER_KEY = open(HELPER_KEY_FILE).read().strip() if os.path.exists(HELPER_KEY_FILE) else ""
 
 

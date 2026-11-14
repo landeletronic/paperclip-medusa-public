@@ -10,7 +10,7 @@ sem volumes/bancos de produção. Modelo inicial: **Qwen3 4B Q4_K_M** (8K e 16K 
 |---|---|---|
 | `Dockerfile` | este diretório | build do `llama-server` com `GGML_VULKAN=ON`, **commit pinado** (`llama.cpp.commit` na label) |
 | Imagem | `medusa-llama-vulkan:<sha>` | runtime Ubuntu 24.04 + Mesa/RADV |
-| Modelos | `/home/tlandskron/medusa-helper-staging/models/` | GGUF com **SHA-256 registrado** (`models/SHA256SUMS`) |
+| Modelos | `/home/usuario/medusa-helper-staging/models/` | GGUF com **SHA-256 registrado** (`models/SHA256SUMS`) |
 | Serviço | container `medusa-helper-staging` | `127.0.0.1:8085` → `:8080` (somente loopback) |
 
 ## Subir (exclusividade da RX 5500)
@@ -19,7 +19,7 @@ sem volumes/bancos de produção. Modelo inicial: **Qwen3 4B Q4_K_M** (8K e 16K 
 docker run -d --name medusa-helper-staging \
   --device /dev/dri/renderD129:/dev/dri/renderD129 \
   -p 127.0.0.1:8085:8080 \
-  -v /home/tlandskron/medusa-helper-staging/models:/models:ro \
+  -v /home/usuario/medusa-helper-staging/models:/models:ro \
   medusa-llama-vulkan:<sha> \
   llama-server -m /models/<modelo>.gguf -c 16384 -ngl 999 -mg 0 --host 0.0.0.0 --port 8080
 ```

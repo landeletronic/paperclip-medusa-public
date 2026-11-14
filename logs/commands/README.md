@@ -38,8 +38,9 @@ powershell -File scripts/Record-Command.ps1 `
 | [`2026-11-09-command-001-bootstrap.md`](2026-11-09-command-001-bootstrap.md) | 2026-11-09 | Bootstrap do repositório | concluído |
 | [`2026-11-09-command-002-compatibilidade-opencode-hermes.md`](2026-11-09-command-002-compatibilidade-opencode-hermes.md) | 2026-11-09 | Compatibilidade OpenCode e Hermes | concluído |
 | [`2026-11-09-command-003-conversas-consolidadas.md`](2026-11-09-command-003-conversas-consolidadas.md) | 2026-11-09 | Consolidação das conversas | concluído |
-| [`2026-11-11-command-007-execucao-e0-primary-host.md`](2026-11-11-command-007-execucao-e0-primary-host.md) | 2026-11-11 | Execução da E0 no host principal | concluído |
+| [`2026-11-11-command-007-execucao-e0-davy.md`](2026-11-11-command-007-execucao-e0-davy.md) | 2026-11-11 | Execução da E0 no Davy Jones | concluído |
 | [`2026-11-12-command-008-esqueleto-e1.md`](2026-11-12-command-008-esqueleto-e1.md) | 2026-11-12 | Esqueleto e validação da E1 | concluído |
 | [`2026-11-12-command-009-execucao-e2-gateway.md`](2026-11-12-command-009-execucao-e2-gateway.md) | 2026-11-12 | Implantação e aceite da E2 | concluído |
 | [`2026-11-12-command-010-execucao-e3-paperclip.md`](2026-11-12-command-010-execucao-e3-paperclip.md) | 2026-11-12 | Implantação e aceite da E3 | concluído |
 | [`2026-11-12-command-011-execucao-e4-paperclip.md`](2026-11-12-command-011-execucao-e4-paperclip.md) | 2026-11-12 | Implantação e aceite da E4 | em andamento |
+| [`2026-11-14-command-031-portal-servicos-davy.md`](2026-11-14-command-031-portal-servicos-davy.md) | 2026-11-14 | Portal de serviços do Davy Jones | concluído |

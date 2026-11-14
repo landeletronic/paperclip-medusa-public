@@ -18,13 +18,13 @@ reversível, sem tocar em iptables/systemd do host.
 ## Uso (host)
 
 ```bash
-bash /home/tlandskron/medusa-k8s/bootstrap.sh     # instalar/(re)criar tudo
-bash /home/tlandskron/medusa-k8s/verify.sh        # verificar (somente leitura)
+bash /home/usuario/medusa-k8s/bootstrap.sh     # instalar/(re)criar tudo
+bash /home/usuario/medusa-k8s/verify.sh        # verificar (somente leitura)
 k3d cluster delete medusa                          # REMOÇÃO COMPLETA sem resíduos
 ```
 
 - **API do cluster:** apenas `127.0.0.1:6443` (nunca na LAN). Acesso com `kubectl` no host.
-- **Token do Vault:** gerado pelo bootstrap em `/home/tlandskron/ci/vault-root-token` (600) — fora do
+- **Token do Vault:** gerado pelo bootstrap em `/home/usuario/ci/vault-root-token` (600) — fora do
   git; valores de teste nunca versionados.
 - **Versões pinadas:** k3d `v5.9.0`, kubectl `v1.31.4`, helm `v3.16.4`, charts `vault 0.29.1`,
   `external-secrets 0.10.5`, `keda 2.16.1`, imagens `redis:7.4-alpine`.

@@ -51,8 +51,9 @@ powershell -File scripts/Add-ConversationEntry.ps1 `
 | [`2026-11-11-session-007-planejamento-fase-0.md`](2026-11-11-session-007-planejamento-fase-0.md) | 2026-11-11 | Planejamento da Fase 0 | concluído |
 | [`2026-11-11-session-008-aprovacao-plano-e-host.md`](2026-11-11-session-008-aprovacao-plano-e-host.md) | 2026-11-11 | Aprovação do plano e definição do host | concluído |
 | [`2026-11-11-session-009-decisao-ai-local.md`](2026-11-11-session-009-decisao-ai-local.md) | 2026-11-11 | Decisão de ferramentas e modelos de IA 100% locais | concluído |
-| [`2026-11-11-session-010-execucao-e0-primary-host.md`](2026-11-11-session-010-execucao-e0-primary-host.md) | 2026-11-11 | Execução da E0 no host principal | concluído |
+| [`2026-11-11-session-010-execucao-e0-davy.md`](2026-11-11-session-010-execucao-e0-davy.md) | 2026-11-11 | Execução da E0 no Davy Jones | concluído |
 | [`2026-11-12-session-011-esqueleto-e1.md`](2026-11-12-session-011-esqueleto-e1.md) | 2026-11-12 | Execução da E1 | concluído |
 | [`2026-11-12-session-012-execucao-e2-gateway.md`](2026-11-12-session-012-execucao-e2-gateway.md) | 2026-11-12 | Execução da E2 | concluído |
 | [`2026-11-12-session-013-execucao-e3-paperclip.md`](2026-11-12-session-013-execucao-e3-paperclip.md) | 2026-11-12 | Execução da E3 | concluído |
 | [`2026-11-12-session-014-execucao-e4-paperclip.md`](2026-11-12-session-014-execucao-e4-paperclip.md) | 2026-11-12 | Execução da E4 | em andamento |
+| [`2026-11-14-session-032-portal-servicos-davy.md`](2026-11-14-session-032-portal-servicos-davy.md) | 2026-11-14 | Portal de serviços do Davy Jones | concluído |
