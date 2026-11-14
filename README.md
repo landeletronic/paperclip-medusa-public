@@ -2,12 +2,23 @@
 
 > Este repositório é um snapshot público sanitizado. Registros operacionais, planos internos, runbooks e identificadores de infraestrutura foram removidos ou generalizados.
 
-Repositório de documentação, pesquisa e registros operacionais do projeto **Paperclip Medusa**.
+## O que é o projeto
+
+O **Paperclip Medusa** é o repositório de documentação, pesquisa, código e registros operacionais de uma empresa de desenvolvimento de software operada por agentes, inspirada no projeto [`paperclipai/paperclip`](https://github.com/paperclipai/paperclip).
+
+O projeto surgiu da necessidade de **agilizar a execução das tarefas do Projeto Medusa**, coordenando agentes especializados, preservando o contexto das atividades e mantendo decisões, comandos, testes e resultados de forma versionada e auditável.
+
+A arquitetura utiliza o **Hermes Agent** como orquestrador, o **OpenCode** e outros agentes locais como executores ou subagentes, o **LiteLLM Proxy** como gateway local e runtimes como **Ollama** e **llama.cpp** para inferência.
+
+A diretriz central e inegociável é que **100% das ferramentas, agentes e modelos de IA operem em infraestrutura local ou autogerida**. Nenhum prompt, contexto, código ou dado de tarefa pode ser enviado a APIs de modelos em nuvem. O acesso à internet continua permitido para GitHub, documentação, atualizações e downloads de dependências ou modelos.
+
+Este repositório público contém um snapshot sanitizado do desenvolvimento realizado na branch `main` do repositório privado.
 
 > **Regra de ouro:** a raiz contém somente os arquivos essenciais de entrada (`README.md`, `AGENTS.md`, `opencode.json`), governança (`LICENSE`, `NOTICE`, `CONTRIBUTING.md`, `CHANGELOG.md`, `SECURITY.md`) e configuração oculta de infraestrutura/lint, além de `.github/`. Todo o demais conteúdo vive em uma subpasta organizada por utilidade.
 
 ## Sumário
 
+- [O que é o projeto](#o-que-é-o-projeto)
 - [Objetivo](#objetivo)
 - [Diretriz de IA local](#diretriz-de-ia-local)
 - [Estrutura](#estrutura)
