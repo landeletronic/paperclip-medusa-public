@@ -1,0 +1,12 @@
+title = "Paperclip Medusa Gitleaks"
+minVersion = "v8.25.0"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Valor de exemplo exato usado no bootstrap da Fase 3"
+regexTarget = "secret"
+regexes = [
+  '''^valor-inicial-fase3$''',
+]

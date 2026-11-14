@@ -1,0 +1,37 @@
+# Pool de run-workers — consome jobs da fila (padrão container-por-run das
+# Fases 1-2 generalizado para escala). Réplicas são controladas pelo KEDA
+# (ScaledObject); `replicas: 0` inicial e teto em maxReplicaCount.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: run-worker
+  namespace: medusa-jobs
+  labels:
+    app.kubernetes.io/part-of: medusa
+    app: run-worker
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: run-worker
+  template:
+    metadata:
+      labels:
+        app: run-worker
+    spec:
+      containers:
+        - name: worker
+          image: redis:7.4-alpine
+          command:
+            - sh
+            - -c
+            - |
+              while true; do
+                if redis-cli -h redis-queue -p 6379 blpop run-jobs 5 | grep -q '^run-jobs$'; then
+                  sleep 1
+                  echo "job processado $(date -u +%FT%TZ)"
+                fi
+              done
+          resources:
+            requests: { cpu: 25m, memory: 32Mi }
+            limits: { cpu: 250m, memory: 64Mi }

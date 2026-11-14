@@ -1,0 +1,134 @@
+name: paperclip-medusa
+
+services:
+  paperclip-db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: paperclip
+      POSTGRES_USER: paperclip
+      POSTGRES_PASSWORD: ${PAPERCLIP_DB_PASSWORD:?defina PAPERCLIP_DB_PASSWORD no .env}
+    volumes:
+      - paperclip-db-data:/var/lib/postgresql/data
+    networks:
+      - paperclip-database
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U paperclip -d paperclip"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  litellm-db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: litellm
+      POSTGRES_USER: litellm
+      POSTGRES_PASSWORD: ${LITELLM_DB_PASSWORD:?defina LITELLM_DB_PASSWORD no .env}
+    volumes:
+      - litellm-db-data:/var/lib/postgresql/data
+    networks:
+      - litellm-database
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U litellm -d litellm"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  litellm:
+    image: ghcr.io/berriai/litellm:v1.109.1
+    restart: unless-stopped
+    command: ["--config", "/app/config.yaml", "--port", "4000"]
+    environment:
+      DATABASE_URL: postgresql://litellm:${LITELLM_DB_PASSWORD:?defina LITELLM_DB_PASSWORD no .env}@litellm-db:5432/litellm
+      LITELLM_MASTER_KEY: ${LITELLM_MASTER_KEY:?defina LITELLM_MASTER_KEY no .env}
+      LITELLM_SALT_KEY: ${LITELLM_SALT_KEY:?defina LITELLM_SALT_KEY no .env}
+      LITELLM_TELEMETRY_DISABLED: "true"
+      OLLAMA_PRIMARY_BASE_URL: ${OLLAMA_PRIMARY_BASE_URL:-http://ollama:11434}
+      OLLAMA_FALLBACK_BASE_URL: ${OLLAMA_FALLBACK_BASE_URL:-http://ollama:11434}
+    volumes:
+      - ${LITELLM_CONFIG_PATH:-../../gateway/config.yaml}:/app/config.yaml:ro
+    ports:
+      - "127.0.0.1:${LITELLM_PORT:-4000}:4000"
+    networks:
+      - app
+      - litellm-database
+      - ollama-access
+    depends_on:
+      litellm-db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - python3 -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:4000/health/liveliness', timeout=5)"
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 45s
+
+  paperclip:
+    image: ghcr.io/paperclipai/paperclip:2026.1106.0
+    restart: unless-stopped
+    command:
+      - node
+      - --import
+      - /opt/paperclip-medusa/paperclip-litellm-proxy.mjs
+      - server/dist-runtime/index.mjs
+    pids_limit: 2048
+    stop_grace_period: 90s
+    environment:
+      HOST: 0.0.0.0
+      PORT: "3100"
+      PAPERCLIP_HOME: /paperclip
+      DATABASE_URL: postgresql://paperclip:${PAPERCLIP_DB_PASSWORD:?defina PAPERCLIP_DB_PASSWORD no .env}@paperclip-db:5432/paperclip
+      PAPERCLIP_DEPLOYMENT_MODE: authenticated
+      PAPERCLIP_DEPLOYMENT_EXPOSURE: private
+      PAPERCLIP_PUBLIC_URL: ${PAPERCLIP_PUBLIC_URL:-http://127.0.0.1:3100}
+      PAPERCLIP_ALLOWED_HOSTNAMES: ${PAPERCLIP_ALLOWED_HOSTNAMES:-}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:?defina BETTER_AUTH_SECRET no .env}
+      PAPERCLIP_TOOL_ACTION_SIGNING_SECRET: ${PAPERCLIP_TOOL_ACTION_SIGNING_SECRET:?defina PAPERCLIP_TOOL_ACTION_SIGNING_SECRET no .env}
+      PAPERCLIP_AGENT_JWT_SECRET: ${PAPERCLIP_AGENT_JWT_SECRET:?defina PAPERCLIP_AGENT_JWT_SECRET no .env}
+      PAPERCLIP_TELEMETRY_DISABLED: "1"
+      DO_NOT_TRACK: "1"
+    volumes:
+      - paperclip-data:/paperclip
+      - ./paperclip-litellm-proxy.mjs:/opt/paperclip-medusa/paperclip-litellm-proxy.mjs:ro
+    ports:
+      - "127.0.0.1:${PAPERCLIP_PORT:-3100}:3100"
+    networks:
+      - app
+      - paperclip-database
+      - ollama-access
+    depends_on:
+      paperclip-db:
+        condition: service_healthy
+      litellm:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - node -e "fetch('http://127.0.0.1:3100/api/health').then(r => { if (!r.ok) process.exit(1) }).catch(() => process.exit(1))"
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 45s
+
+volumes:
+  paperclip-db-data:
+  litellm-db-data:
+  paperclip-data:
+
+networks:
+  app:
+    driver: bridge
+  paperclip-database:
+    driver: bridge
+    internal: true
+  litellm-database:
+    driver: bridge
+    internal: true
+  ollama-access:
+    external: true
+    name: ${OLLAMA_DOCKER_NETWORK:-hermes-architect_backend}

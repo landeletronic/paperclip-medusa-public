@@ -1,0 +1,23 @@
+# ScaledObject — KEDA escala o pool run-worker pela profundidade da fila.
+# maxReplicaCount = TETO DE RÉPLICAS (decisão 5): nunca ultrapassado.
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: run-worker-scaler
+  namespace: medusa-jobs
+  labels:
+    app.kubernetes.io/part-of: medusa
+spec:
+  scaleTargetRef:
+    name: run-worker
+  pollingInterval: 5
+  cooldownPeriod: 15
+  minReplicaCount: 0
+  maxReplicaCount: 4
+  triggers:
+    - type: redis
+      metadata:
+        # FQDN: o operador KEDA roda em outro namespace e não resolve o nome curto
+        address: redis-queue.medusa-jobs.svc.cluster.local:6379
+        listName: run-jobs
+        listLength: "2"

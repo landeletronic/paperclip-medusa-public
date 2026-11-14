@@ -1,0 +1,34 @@
+{
+  "machine": {
+    "id": "primary-host-jones-hermes",
+    "cpu_cores": 14,
+    "ram_gib": 15,
+    "gpus": [
+      { "slot": "card1", "name": "RX 6600/6600 XT (Navi 23)", "vram_mb": 8192, "role": "modelos locais (Ollama)" },
+      { "slot": "card2", "name": "RX 5500/Pro 5500 (Navi 14)", "vram_mb": 8192, "role": "livre" }
+    ]
+  },
+  "models": [
+    {
+      "model_name": "medusa-primary",
+      "alias": "openai/medusa-primary",
+      "backend": "ollama/qwen3:4b-64k",
+      "rpm_limit": 60,
+      "tpm_limit": 50000,
+      "vram_mb": 5734,
+      "notes": "q4_0 @ 64k contexto; ~62 tok/s na RX 6600 (medido na Fase 0)"
+    },
+    {
+      "model_name": "medusa-fallback",
+      "alias": "openai/medusa-fallback",
+      "backend": "ollama/qwen3:8b-chat-16k",
+      "rpm_limit": 30,
+      "tpm_limit": 25000,
+      "vram_mb": 8300,
+      "notes": "fallback; modelo maior, menor vazão; só um residente por vez na RX 6600"
+    }
+  ],
+  "executor": {
+    "max_concurrent_runs": 2
+  }
+}

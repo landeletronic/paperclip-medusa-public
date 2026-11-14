@@ -1,0 +1,17 @@
+{
+  "class": "generic-run",
+  "image": "postgres@sha256:EXEMPLO-DIGEST-AQUI",
+  "workspace": "/var/lib/docker/volumes/paperclip-medusa_paperclip-data/_data/instances/default/isolated-workspaces/<companyId>/<issueId>",
+  "command": ["sh", "-c", "echo linha >> /workspace/state.log && echo artefato > /workspace/artifacts/resultado.txt && cat /workspace/state.log"],
+  "env": {
+    "DEMO_SECRET": "valor-sensivel-nao-logar"
+  },
+  "limits": {
+    "cpus": "0.5",
+    "memory": "256m",
+    "pids": 128
+  },
+  "timeout_seconds": 600,
+  "network": "none",
+  "user": "1000:1000"
+}

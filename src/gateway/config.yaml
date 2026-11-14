@@ -1,0 +1,81 @@
+model_list:
+  - model_name: medusa-primary
+    litellm_params:
+      model: ollama/qwen3:4b-64k
+      api_base: os.environ/OLLAMA_PRIMARY_BASE_URL
+      request_timeout: 600
+      rpm_limit: 60          # capacidade declarada (src/gateway/capacity.json) — Fase 2
+      tpm_limit: 50000
+
+  - model_name: medusa-fallback
+    litellm_params:
+      model: ollama/qwen3:8b-chat-16k
+      api_base: os.environ/OLLAMA_FALLBACK_BASE_URL
+      request_timeout: 600
+      rpm_limit: 30          # capacidade declarada (src/gateway/capacity.json) — Fase 2
+      tpm_limit: 25000
+
+  # O adaptador OpenCode preserva o identificador provider/model na chamada.
+  - model_name: openai/medusa-primary
+    litellm_params:
+      model: ollama/qwen3:4b-64k
+      api_base: os.environ/OLLAMA_PRIMARY_BASE_URL
+      request_timeout: 600
+      rpm_limit: 60          # capacidade declarada (src/gateway/capacity.json) — Fase 2
+      tpm_limit: 50000
+
+  - model_name: openai/medusa-fallback
+    litellm_params:
+      model: ollama/qwen3:8b-chat-16k
+      api_base: os.environ/OLLAMA_FALLBACK_BASE_URL
+      request_timeout: 600
+      rpm_limit: 30          # capacidade declarada (src/gateway/capacity.json) — Fase 2
+      tpm_limit: 25000
+
+  # Auxiliar local "chefe de gabinete" (plano padrão, Fase 3): Qwen3 8B Q4_K_M
+  # na RX 5500 via llama.cpp Vulkan (container medusa-helper, rede interna do
+  # Compose, sem porta publicada). Acesso por chave virtual exclusiva.
+  # Fallback: chamar o Hermes diretamente (medusa-primary), sem modelo intermediário.
+  - model_name: medusa-local-helper
+    litellm_params:
+      model: openai/medusa-local-helper
+      api_base: http://medusa-helper:8080/v1
+      api_key: local-helper-sem-auth
+      # Timeout compatível com gerações longas (modo planejamento do Chief of
+      # Staff: blocos de ~1500 tokens + prompt de ~9K). O "timeout curto" da
+      # Fase 3 (60 s) era suficiente só para triagem de 900 tokens.
+      request_timeout: 300
+      rpm_limit: 6
+      tpm_limit: 6000
+
+  # Caminho direto para o Hermes — ÚNICO fallback sancionado do auxiliar
+  # (plano: "fallback: bypassar o auxiliar e chamar o Hermes diretamente").
+  - model_name: medusa-hermes-direct
+    litellm_params:
+      model: ollama/qwen3:4b-64k
+      api_base: os.environ/OLLAMA_PRIMARY_BASE_URL
+      request_timeout: 600
+      rpm_limit: 60
+      tpm_limit: 50000
+
+router_settings:
+  fallbacks:
+    - medusa-primary:
+        - medusa-fallback
+    - openai/medusa-primary:
+        - openai/medusa-fallback
+    - medusa-local-helper:
+        - medusa-hermes-direct
+  num_retries: 2
+  retry_after: 2
+  allowed_fails: 1
+  cooldown_time: 30
+
+litellm_settings:
+  drop_params: true
+  request_timeout: 600
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+  database_url: os.environ/DATABASE_URL
+  store_model_in_db: true

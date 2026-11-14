@@ -1,0 +1,49 @@
+---
+name: Propor melhoria
+description: Sugerir funcionalidade, automação ou evolução arquitetural
+title: "feat: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema ou oportunidade
+      description: Qual necessidade concreta deve ser atendida?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Solução proposta
+      description: Descreva comportamento, limites e interfaces esperadas.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas consideradas
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critérios de aceite
+      description: Use itens verificáveis.
+      placeholder: |
+        - [ ] Critério 1
+        - [ ] Critério 2
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Riscos e segurança
+      description: Inclua impacto em isolamento, segredos, rede, capacidade e inferência local.
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Restrições
+      options:
+        - label: A proposta preserva inferência de IA 100% local.
+          required: true
+        - label: A proposta não depende de segredos versionados.
+          required: true

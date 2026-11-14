@@ -1,0 +1,41 @@
+# Fila local (Redis) que alimenta o pool de run-workers (decisão 5:
+# "fila + saturação"). Versão pinada; sem persistência (fila de PoC).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-queue
+  namespace: medusa-jobs
+  labels:
+    app.kubernetes.io/part-of: medusa
+    app: redis-queue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-queue
+  template:
+    metadata:
+      labels:
+        app: redis-queue
+    spec:
+      containers:
+        - name: redis
+          image: redis:7.4-alpine
+          args: ["redis-server", "--save", "", "--appendonly", "no"]
+          ports:
+            - containerPort: 6379
+          resources:
+            requests: { cpu: 25m, memory: 32Mi }
+            limits: { cpu: 250m, memory: 64Mi }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-queue
+  namespace: medusa-jobs
+spec:
+  selector:
+    app: redis-queue
+  ports:
+    - port: 6379
+      targetPort: 6379

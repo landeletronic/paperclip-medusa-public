@@ -1,0 +1,57 @@
+---
+name: Relatar defeito
+description: Registrar comportamento incorreto com evidências reproduzíveis
+title: "bug: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Não inclua segredos, tokens, dados pessoais ou detalhes de vulnerabilidades exploráveis.
+        Para segurança, siga SECURITY.md.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Resumo
+      description: Descreva objetivamente o problema.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Como reproduzir
+      description: Liste os passos mínimos, comandos e entradas sem dados sensíveis.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Resultado esperado
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Resultado obtido
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Commit/versão
+      placeholder: git rev-parse --short HEAD
+  - type: textarea
+    id: environment
+    attributes:
+      label: Ambiente
+      description: SO, arquitetura, Docker, Kubernetes e componentes relevantes.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Verificações
+      options:
+        - label: Removi ou mascarei segredos e dados pessoais.
+          required: true
+        - label: Procurei issues existentes sobre o mesmo problema.
+          required: true

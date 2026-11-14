@@ -1,0 +1,64 @@
+# Sistema operacional
+Thumbs.db
+Desktop.ini
+.DS_Store
+ehthumbs.db
+
+# Editores e IDEs (estado local, nunca versionado)
+.vscode/
+.idea/
+.fleet/
+.history/
+.obsidian/
+*.code-workspace
+*.swp
+*.swo
+*~
+
+# Ambiente e segredos
+.env
+.env.*
+!.env.example
+*.local
+secrets/
+*.pem
+*.key
+*.pfx
+*.p12
+
+# Dependências e artefatos de build
+node_modules/
+dist/
+build/
+out/
+coverage/
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Dados e volumes locais do stack Paperclip Medusa
+data/
+volumes/
+src/infra/compose/data/
+src/infra/compose/volumes/
+src/infra/compose/postgres-data/
+src/infra/compose/paperclip-data/
+
+# Temporários e backups
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+.cache/
+.tools/
+
+# Logs de runtime (os registros versionados usam .md em logs/)
+*.log
+!logs/**/*.log
+
+# Agentes de IA
+# Override pessoal do Hermes Agent; as regras compartilhadas ficam em AGENTS.md.
+AGENTS.override.md
