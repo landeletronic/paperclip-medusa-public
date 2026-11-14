@@ -15,7 +15,7 @@ Repositório de documentação, pesquisa e registros operacionais do projeto **P
 - [Convenções de nomenclatura](#convenções-de-nomenclatura)
 - [Scripts de automação](#scripts-de-automação)
 - [Fluxo Git](#fluxo-git)
-- [Estado atual](#estado-atual)
+- [Estado público](#estado-público)
 - [Regras para agentes](#regras-para-agentes)
 
 ## Objetivo
